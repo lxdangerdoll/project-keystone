@@ -6,8 +6,8 @@
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(210 25% 7.8431%);
-  --card: hsl(180 6.6667% 97.0588%);
-  --card-foreground: hsl(210 25% 7.8431%);
+  --card: hsla(220 26% 14% / 0.4);
+  --card-foreground: hsl(231 48% 86%);
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(210 25% 7.8431%);
   --primary: hsl(203.8863 88.2845% 53.1373%);
@@ -55,8 +55,8 @@
 .dark {
   --background: hsl(0 0% 0%);
   --foreground: hsl(200 6.6667% 91.1765%);
-  --card: hsl(228 9.8039% 10%);
-  --card-foreground: hsl(0 0% 85.0980%);
+  --card: hsla(220 26% 14% / 0.4);
+  --card-foreground: hsl(231 48% 86%);
   --popover: hsl(0 0% 0%);
   --popover-foreground: hsl(200 6.6667% 91.1765%);
   --primary: hsl(203.7736 87.6033% 52.5490%);
@@ -135,6 +135,25 @@
     border-color: hsla(239 84% 67% / 0.5);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px hsla(239 84% 67% / 0.3);
+  }
+
+  .choice-selected {
+    background: hsla(239 84% 67% / 0.15);
+    border-color: hsla(239 84% 67% / 0.6);
+    box-shadow: 0 4px 15px hsla(239 84% 67% / 0.3);
+  }
+
+  .choice-submitting {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+
+  /* Override default card styling to use glassmorphism */
+  [data-testid="card"], .card {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border) !important;
   }
 
   .progress-bar {

@@ -149,6 +149,19 @@ Navigator Torres approached cautiously. "Captain, if this intelligence is accura
     choices.forEach(choice => this.choices.set(choice.id, choice));
     this.characters.set(character1.id, character1);
     votes.forEach(vote => this.communityVotes.set(vote.choiceId, vote));
+
+    // Initialize demo user progress
+    const demoProgress: UserProgress = {
+      id: "demo-progress-1",
+      userId: "demo-user-1",
+      currentChapter: 3,
+      totalChoices: 0,
+      trustNetwork: 0,
+      councilStanding: 0,
+      crewLoyalty: 0,
+      completedStories: []
+    };
+    this.userProgress.set("demo-progress-1", demoProgress);
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -230,7 +243,22 @@ Navigator Torres approached cautiously. "Captain, if this intelligence is accura
   }
 
   async getUserProgress(userId: string): Promise<UserProgress | undefined> {
-    return Array.from(this.userProgress.values()).find(progress => progress.userId === userId);
+    const progress = Array.from(this.userProgress.values()).find(progress => progress.userId === userId);
+    
+    // If demo user has no progress, create it automatically
+    if (!progress && userId === "demo-user-1") {
+      return await this.createUserProgress({
+        userId: "demo-user-1",
+        currentChapter: 3,
+        totalChoices: 0,
+        trustNetwork: 0,
+        councilStanding: 0,
+        crewLoyalty: 0,
+        completedStories: []
+      });
+    }
+    
+    return progress;
   }
 
   async createUserProgress(insertProgress: InsertUserProgress): Promise<UserProgress> {

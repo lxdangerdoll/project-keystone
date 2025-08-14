@@ -54,10 +54,10 @@ export default function ChoiceSystem({
             key={choice.id}
             className={`glassmorphism choice-hover rounded-xl p-6 cursor-pointer border transition-all duration-300 ${
               selectedChoice === choice.id 
-                ? 'border-purple-500 bg-purple-600/10' 
+                ? 'choice-selected' 
                 : 'border-gray-600/30'
-            } ${isSubmitting ? 'opacity-50 pointer-events-none' : ''}`}
-            onClick={() => onChoiceSelect(choice.id)}
+            } ${isSubmitting ? 'choice-submitting pointer-events-none' : ''}`}
+            onClick={() => !isSubmitting && onChoiceSelect(choice.id)}
           >
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center">

@@ -40,13 +40,17 @@ export default function StoryPage() {
       return response.json();
     },
     onSuccess: () => {
-      toast({
-        title: "Choice Submitted",
-        description: "Your decision has been recorded and will influence the story.",
-      });
-      queryClient.invalidateQueries({ queryKey: ["/api/users", CURRENT_USER_ID, "progress"] });
+      // Keep the selected choice for visual feedback
+      setTimeout(() => {
+        toast({
+          title: "Choice Submitted",
+          description: "Your decision has been recorded and will influence the story.",
+        });
+        queryClient.invalidateQueries({ queryKey: ["/api/users", CURRENT_USER_ID, "progress"] });
+      }, 800);
     },
     onError: () => {
+      setSelectedChoice(null); // Clear selection on error
       toast({
         title: "Error",
         description: "Failed to submit your choice. Please try again.",
@@ -56,6 +60,8 @@ export default function StoryPage() {
   });
 
   const handleChoiceSelect = (choiceId: string) => {
+    if (submitChoiceMutation.isPending || selectedChoice === choiceId) return;
+    
     setSelectedChoice(choiceId);
     if (storyData) {
       submitChoiceMutation.mutate({
