@@ -123,12 +123,12 @@ const MainContent: React.FC = () => {
           Through an interactive experience, your choices will have permanent consequences on the official
           story. You are not just a reader; you are a Porter, a builder, a part of the network. The Spark
           of Connection is not in any one character. It&apos;s in all of us.
-        </p>
 
       {/* Call to Action Button */}
 <button onClick={() => setLocation("/story")}>
   Enter the Narrative
 </button>
+        </p>
 
 };
       </div>
