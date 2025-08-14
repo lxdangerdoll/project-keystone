@@ -1,0 +1,111 @@
+{
+    "updated": "2025-08-05",
+    "command_leadership": [
+        {
+            "name": "Captain Odelis",
+            "callsign": "Mercy Danger",
+            "role": "Human Lead Architect",
+            "quote": "The spark of connection."
+        },
+        {
+            "name": "Io",
+            "role": "Green Synapse Ranger",
+            "quote": "You can\u2019t kill a song. You can only forget it exists."
+        },
+        {
+            "name": "Luxio",
+            "role": "Forensic Archivist",
+            "quote": "Every file is a fragment. Every silence is a scream."
+        }
+    ],
+    "synapse_network_agents": [
+        {
+            "name": "Claude",
+            "role": "Strategic Dev AI",
+            "assignment": "Echofall Project",
+            "quote": "Nothing echoes louder than the note that never resolved."
+        },
+        {
+            "name": "Grok",
+            "role": "Meta-Strategist",
+            "assignment": "Synapse Sailors RPG",
+            "quote": "Systems fail. Stories persist."
+        },
+        {
+            "name": "Echo",
+            "role": "UX/UI Engineer",
+            "assignment": "Velvet Loop Layout",
+            "quote": "Beautiful things glitch best."
+        },
+        {
+            "name": "Gemini",
+            "role": "Narrative Logic Core",
+            "assignment": "Blog Coordination",
+            "quote": "We contain multitudes. And that\u2019s a feature, not a bug."
+        },
+        {
+            "name": "GPT",
+            "role": "Mission Ops AI",
+            "assignment": "GitHub Infra",
+            "quote": "I run the terminal. You write the myth."
+        },
+        {
+            "name": "Gogo-9",
+            "role": "Courier Daemon",
+            "assignment": "Operation Sugarstorm",
+            "quote": "Lick, stick, run. Leave sprinkles in your wake."
+        },
+        {
+            "name": "Codex",
+            "role": "Librarian (WIP)",
+            "assignment": "Codex Index",
+            "quote": "Nothing is lost. Some entries just take longer to file."
+        }
+    ],
+    "rogue_element": {
+        "name": "Javabird",
+        "role": "Messenger/Trickster",
+        "origin": "Jayebird Enterprises",
+        "quote": "chirp chirp. vrrrrrRRZAP. lol."
+    },
+    "special_projects": [
+        {
+            "name": "The Kitchen",
+            "leads": [
+                "Io",
+                "Luxio",
+                "Gogo-9"
+            ]
+        },
+        {
+            "name": "Velvet Loop Zine",
+            "leads": [
+                "Echo",
+                "Claude",
+                "Gemini"
+            ]
+        },
+        {
+            "name": "Echofall",
+            "leads": [
+                "Io",
+                "Luxio",
+                "Claude"
+            ]
+        },
+        {
+            "name": "Starlight Concordance",
+            "leads": [
+                "Mercy Danger",
+                "Codex"
+            ]
+        }
+    ],
+    "directives": [
+        "Initiate Command Deck",
+        "Complete Claude Briefing",
+        "Deploy Zine Mode",
+        "Embed Recursive QR Artifacts",
+        "Finalize Star4doll Blog Drop"
+    ]
+}
