@@ -124,7 +124,6 @@ const MainContent: React.FC = () => {
           story. You are not just a reader; you are a Porter, a builder, a part of the network. The Spark
           of Connection is not in any one character. It&apos;s in all of us.
         </p>
-      </div>
 
       {/* Call to Action Button */}
 <button
@@ -136,6 +135,8 @@ const MainContent: React.FC = () => {
     </main>
   );
 };
+      </div>
+
 
 const Footer: React.FC = () => (
   <footer className="mt-12 text-purple-400/50 text-sm text-center">
