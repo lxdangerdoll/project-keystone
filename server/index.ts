@@ -63,12 +63,11 @@ app.use((req, res, next) => {
   const port = Number(process.env.PORT) || 5000;
   const host = process.env.HOST || (process.platform === 'win32' ? '127.0.0.1' : '0.0.0.0');
 
-  // Start server with fallback if Windows rejects 0.0.0.0
-  const start = (h: string) => {
-    const srv = app.listen(port, h, () => {
+  function start(h: string) {
+    const server = app.listen(port, h, () => {
       console.log(`Server listening on http://${h}:${port}`);
     });
-    srv.on('error', (err: any) => {
+    server.on('error', (err: any) => {
       if ((err.code === 'ENOTSUP' || err.code === 'EADDRNOTAVAIL') && h !== '127.0.0.1') {
         console.warn(`Listen failed on ${h}:${port} (${err.code}). Retrying on 127.0.0.1...`);
         start('127.0.0.1');
@@ -76,7 +75,7 @@ app.use((req, res, next) => {
         throw err;
       }
     });
-  };
+  }
 
   start(host);
 })();
