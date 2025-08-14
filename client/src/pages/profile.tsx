@@ -118,15 +118,15 @@ export default function ProfilePage() {
                     <CardTitle className="text-white font-orbitron text-lg">Quick Actions</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
-                    <Button variant="outline" className="w-full justify-start glassmorphism-light border-gray-600/30">
+                    <Button variant="outline" className="w-full justify-start glassmorphism-light border-gray-600/30 text-gray-300 hover:text-white hover:bg-gray-600/30">
                       <i className="fas fa-download mr-2"></i>
                       Export Choices
                     </Button>
-                    <Button variant="outline" className="w-full justify-start glassmorphism-light border-gray-600/30">
+                    <Button variant="outline" className="w-full justify-start glassmorphism-light border-gray-600/30 text-gray-300 hover:text-white hover:bg-gray-600/30">
                       <i className="fas fa-share mr-2"></i>
                       Share Profile
                     </Button>
-                    <Button variant="outline" className="w-full justify-start glassmorphism-light border-gray-600/30">
+                    <Button variant="outline" className="w-full justify-start glassmorphism-light border-gray-600/30 text-gray-300 hover:text-white hover:bg-gray-600/30">
                       <i className="fas fa-cog mr-2"></i>
                       Preferences
                     </Button>
