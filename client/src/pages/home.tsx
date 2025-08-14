@@ -126,14 +126,10 @@ const MainContent: React.FC = () => {
         </p>
 
       {/* Call to Action Button */}
-<button
-  className="mt-8 px-6 py-3 rounded-lg font-orbitron bg-purple-500 text-white hover:bg-purple-700 transition text-xl shadow-lg"
-  onClick={() => setLocation("/story")}
->
+<button onClick={() => setLocation("/story")}>
   Enter the Narrative
 </button>
-    </main>
-  );
+
 };
       </div>
 
