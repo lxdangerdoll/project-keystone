@@ -107,32 +107,16 @@ const MainContent: React.FC = () => {
   const [, setLocation] = useLocation();
 
   return (
-    <main className="glassmorphism rounded-2xl p-8 max-w-3xl w-full mx-auto">
-      <h2 className="font-orbitron text-2xl font-bold text-purple-300 mb-4">
-        The game was rigged. We&apos;re building a new one.
-      </h2>
-      <p className="text-lg text-gray-300 leading-relaxed mb-6">
-        Project Keystone is not just a story. It is a <b>Social Strand Narrative</b>—a living, breathing
-        universe built on a single principle: <b>connection</b>. Our story follows the crew of the starship{" "}
-        <i>Wanderer</i> as they uncover a galaxy-altering truth and become fugitives, carrying a message
-        that could save everyone but costs them everything.
-      </p>
-      <div className="border-t border-purple-400/20 pt-6">
-        <h3 className="font-orbitron text-xl font-bold text-indigo-300 mb-2">Your Choices Shape the Canon</h3>
-        <p className="text-gray-400">
-          Through an interactive experience, your choices will have permanent consequences on the official
-          story. You are not just a reader; you are a Porter, a builder, a part of the network. The Spark
-          of Connection is not in any one character. It&apos;s in all of us.
-
-      {/* Call to Action Button */}
-<button onClick={() => setLocation("/story")}>
-  Enter the Narrative
-</button>
-        </p>
-
+    <main>
+      <button
+        className="bg-purple-500 text-white"
+        onClick={() => setLocation("/story")}
+      >
+        Enter the Narrative
+      </button>
+    </main>
+  );
 };
-      </div>
-
 
 const Footer: React.FC = () => (
   <footer className="mt-12 text-purple-400/50 text-sm text-center">
