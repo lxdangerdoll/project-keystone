@@ -9,6 +9,7 @@ import UniversePage from "@/pages/universe";
 import CommunityPage from "@/pages/community";
 import ProfilePage from "@/pages/profile";
 import NotFound from "@/pages/not-found";
+import Home from "@/pages/home";
 
 function Router() {
   return (
