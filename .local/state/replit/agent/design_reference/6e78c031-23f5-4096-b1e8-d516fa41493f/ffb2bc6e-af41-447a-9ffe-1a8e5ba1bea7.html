@@ -1,0 +1,610 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Keystone // Interactive Narrative</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'space-dark': '#0a0a1a',
+                        'space-blue': '#1e1b4b',
+                        'cosmic-purple': '#6366f1',
+                        'nebula-pink': '#8b5cf6',
+                    },
+                    fontFamily: {
+                        'orbitron': ['Orbitron', 'monospace'],
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a1a;
+            color: #e0e0ff;
+        }
+        
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .spark-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
+        }
+        
+        .spark-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: rotateSpark 15s linear infinite;
+        }
+        
+        .spark-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: #6366f1;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particle-burst 4s ease-out infinite;
+        }
+        
+        @keyframes rotateSpark {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes particle-burst {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.5) translate(var(--x), var(--y));
+                opacity: 0;
+            }
+        }
+        
+        .glassmorphism {
+            background: rgba(17, 24, 39, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glassmorphism-light {
+            background: rgba(17, 24, 39, 0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .hero-bg {
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15), transparent 50%),
+                radial-gradient(circle at 80% 90%, rgba(139, 92, 246, 0.15), transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.1), transparent 50%);
+        }
+        
+        .choice-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .choice-hover:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        }
+        
+        .consequence-pulse {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.8);
+            }
+        }
+        
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar-hidden {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+<body class="hero-bg">
+    <!-- @COMPONENT: AppLayout [main application container] -->
+    <div class="min-h-screen flex">
+        
+        <!-- @COMPONENT: Sidebar [navigation and progress] -->
+        <aside id="sidebar" class="w-80 glassmorphism border-r-0 p-6 sidebar-transition flex flex-col">
+            <!-- Logo Header -->
+            <div class="flex items-center mb-8">
+                <div class="spark-container mr-3">
+                    <svg class="spark-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="strandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#818cf8; stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#a78bfa; stop-opacity:1" />
+                            </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <path d="M 20 50 C 40 20, 60 20, 80 50" stroke="url(#strandGradient)" stroke-width="4" fill="none" filter="url(#glow)" transform-origin="center" transform="rotate(45)"/>
+                        <path d="M 50 20 C 80 40, 80 60, 50 80" stroke="url(#strandGradient)" stroke-width="4" fill="none" filter="url(#glow)" transform-origin="center" transform="rotate(45)"/>
+                    </svg>
+                    <div id="mini-particle-container" class="spark-particles"></div>
+                </div>
+                <div>
+                    <h1 class="font-orbitron text-lg font-bold text-white">KEYSTONE</h1>
+                    <p class="text-xs text-indigo-300">Synapse Comics</p>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-purple-300">Story Progress</span>
+                    <span class="text-sm text-gray-400" data-bind="progress.percentage">23%</span>
+                </div>
+                <div class="w-full bg-gray-700 rounded-full h-2">
+                    <div class="progress-bar h-2 rounded-full" style="width: 23%" data-bind="progress.width"></div>
+                </div>
+                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>Chapter <span data-bind="progress.currentChapter">3</span></span>
+                    <span><span data-bind="progress.totalChoices">47</span> choices made</span>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="space-y-2 mb-8">
+                <a href="#story" class="flex items-center px-3 py-2 rounded-lg bg-purple-600/20 text-purple-300 border border-purple-500/30">
+                    <i class="fas fa-book-open mr-3 text-sm"></i>
+                    <span class="font-medium">Story Mode</span>
+                </a>
+                <a href="#characters" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700/30 text-gray-300 transition-colors">
+                    <i class="fas fa-users mr-3 text-sm"></i>
+                    <span>Characters</span>
+                </a>
+                <a href="#universe" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700/30 text-gray-300 transition-colors">
+                    <i class="fas fa-globe mr-3 text-sm"></i>
+                    <span>Universe</span>
+                </a>
+                <a href="#community" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700/30 text-gray-300 transition-colors">
+                    <i class="fas fa-vote-yea mr-3 text-sm"></i>
+                    <span>Community</span>
+                </a>
+                <a href="#profile" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-700/30 text-gray-300 transition-colors">
+                    <i class="fas fa-user mr-3 text-sm"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <!-- Recent Choices -->
+            <div class="mt-auto">
+                <h3 class="font-orbitron text-sm font-bold text-indigo-300 mb-3">RECENT IMPACT</h3>
+                <div class="space-y-2">
+                    <div class="glassmorphism-light rounded-lg p-3 text-xs">
+                        <div class="text-yellow-400 font-medium">⚡ Choice Resonance</div>
+                        <div class="text-gray-400 mt-1">Your decision to <span class="text-purple-300" data-mock="true">trust Captain Chen</span> unlocked new story paths</div>
+                    </div>
+                    <div class="glassmorphism-light rounded-lg p-3 text-xs">
+                        <div class="text-green-400 font-medium">🔗 Network Effect</div>
+                        <div class="text-gray-400 mt-1"><span class="text-blue-300" data-mock="true">67% of Porters</span> made the same choice</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- @END_COMPONENT: Sidebar -->
+
+        <!-- @COMPONENT: MainContent [story interface] -->
+        <main class="flex-1 flex flex-col">
+            
+            <!-- @COMPONENT: TopBar [chapter navigation and controls] -->
+            <header class="glassmorphism border-b border-gray-700/30 p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button id="sidebar-toggle" class="md:hidden text-gray-400 hover:text-white">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h2 class="font-orbitron text-xl font-bold text-white" data-bind="story.chapterTitle">Chapter 3: The Signal</h2>
+                        <p class="text-sm text-gray-400" data-bind="story.location">Aboard the Wanderer - Bridge</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <button class="glassmorphism-light px-4 py-2 rounded-lg text-sm hover:bg-gray-600/30 transition-colors">
+                        <i class="fas fa-bookmark mr-2"></i>
+                        Bookmark
+                    </button>
+                    <button class="glassmorphism-light px-4 py-2 rounded-lg text-sm hover:bg-gray-600/30 transition-colors">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </header>
+            <!-- @END_COMPONENT: TopBar -->
+
+            <!-- @COMPONENT: StoryContent [main story display] -->
+            <div class="flex-1 overflow-auto">
+                <div class="max-w-4xl mx-auto p-6">
+                    
+                    <!-- Story Text Section -->
+                    <div class="glassmorphism rounded-xl p-8 mb-6">
+                        <!-- Chapter Image -->
+                        <!-- A high-tech spaceship bridge with holographic displays and star field visible through windows -->
+                        <img src="https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=600" 
+                             alt="Spaceship bridge with holographic displays" 
+                             class="w-full h-64 object-cover rounded-lg mb-6" />
+                        
+                        <div class="prose prose-invert max-w-none">
+                            <p class="text-lg leading-relaxed text-gray-300 mb-6" data-mock="true">
+                                The bridge of the *Wanderer* hummed with tension as Captain Chen studied the decoded transmission. The holographic display cast an eerie blue glow across her weathered features, highlighting the concern etched in her eyes.
+                            </p>
+                            
+                            <p class="text-lg leading-relaxed text-gray-300 mb-6" data-mock="true">
+                                "This changes everything," she whispered, her voice barely audible over the ship's ambient systems. The data streams flowing across the screen told a story of conspiracy that reached the highest levels of the Galactic Council.
+                            </p>
+                            
+                            <p class="text-lg leading-relaxed text-gray-300 mb-6" data-mock="true">
+                                Navigator Torres approached cautiously. "Captain, if this intelligence is accurate, we're not just carrying cargo anymore. We're carrying the evidence that could expose the entire Keystone Project."
+                            </p>
+                            
+                            <div class="glassmorphism-light rounded-lg p-4 border-l-4 border-yellow-400 mb-6">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-yellow-400 mt-1 mr-3"></i>
+                                    <div>
+                                        <h4 class="font-bold text-yellow-400 mb-2">CRITICAL DECISION POINT</h4>
+                                        <p class="text-sm text-gray-300">Your next choice will have permanent consequences on the story canon. Choose carefully, Porter.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- @COMPONENT: ChoiceSystem [interactive decision making] -->
+                    <div class="space-y-4 mb-8">
+                        <h3 class="font-orbitron text-xl font-bold text-indigo-300 mb-4">
+                            <i class="fas fa-route mr-2"></i>
+                            YOUR CHOICE SHAPES THE NARRATIVE
+                        </h3>
+                        
+                        <div class="grid gap-4">
+                            <!-- Choice Option 1 -->
+                            <div class="glassmorphism choice-hover rounded-xl p-6 cursor-pointer border border-gray-600/30" data-event="click:selectChoice" data-choice="1">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold mr-3">A</div>
+                                        <h4 class="font-bold text-blue-300">Broadcast the Evidence Immediately</h4>
+                                    </div>
+                                    <div class="flex items-center text-xs text-gray-400">
+                                        <i class="fas fa-users mr-1"></i>
+                                        <span data-mock="true">34%</span>
+                                    </div>
+                                </div>
+                                <p class="text-gray-300 text-sm leading-relaxed mb-3" data-mock="true">
+                                    Take immediate action. Transmit the Keystone files to every major news network and resistance cell simultaneously. The truth needs to be heard, regardless of the personal cost to your crew.
+                                </p>
+                                <div class="flex items-center justify-between text-xs">
+                                    <div class="flex space-x-4">
+                                        <span class="text-red-400"><i class="fas fa-exclamation-triangle mr-1"></i>High Risk</span>
+                                        <span class="text-green-400"><i class="fas fa-globe mr-1"></i>Max Impact</span>
+                                    </div>
+                                    <div class="text-indigo-400">
+                                        <i class="fas fa-bolt mr-1"></i>
+                                        Unlocks: Fugitive Path
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Choice Option 2 -->
+                            <div class="glassmorphism choice-hover rounded-xl p-6 cursor-pointer border border-gray-600/30" data-event="click:selectChoice" data-choice="2">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-sm font-bold mr-3">B</div>
+                                        <h4 class="font-bold text-purple-300">Find a Trusted Ally First</h4>
+                                    </div>
+                                    <div class="flex items-center text-xs text-gray-400">
+                                        <i class="fas fa-users mr-1"></i>
+                                        <span data-mock="true">45%</span>
+                                    </div>
+                                </div>
+                                <p class="text-gray-300 text-sm leading-relaxed mb-3" data-mock="true">
+                                    Seek out Admiral Reeves, an old friend who might still be trustworthy within the Council. This evidence needs to reach someone with the power and integrity to act on it properly.
+                                </p>
+                                <div class="flex items-center justify-between text-xs">
+                                    <div class="flex space-x-4">
+                                        <span class="text-yellow-400"><i class="fas fa-balance-scale mr-1"></i>Balanced Risk</span>
+                                        <span class="text-blue-400"><i class="fas fa-handshake mr-1"></i>Diplomatic</span>
+                                    </div>
+                                    <div class="text-indigo-400">
+                                        <i class="fas fa-bolt mr-1"></i>
+                                        Unlocks: Alliance Path
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Choice Option 3 -->
+                            <div class="glassmorphism choice-hover rounded-xl p-6 cursor-pointer border border-gray-600/30" data-event="click:selectChoice" data-choice="3">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-sm font-bold mr-3">C</div>
+                                        <h4 class="font-bold text-gray-300">Destroy the Evidence</h4>
+                                    </div>
+                                    <div class="flex items-center text-xs text-gray-400">
+                                        <i class="fas fa-users mr-1"></i>
+                                        <span data-mock="true">21%</span>
+                                    </div>
+                                </div>
+                                <p class="text-gray-300 text-sm leading-relaxed mb-3" data-mock="true">
+                                    Some secrets are too dangerous to reveal. Delete the files and continue your original mission. Sometimes ignorance truly is bliss, and your crew's safety comes first.
+                                </p>
+                                <div class="flex items-center justify-between text-xs">
+                                    <div class="flex space-x-4">
+                                        <span class="text-green-400"><i class="fas fa-shield-alt mr-1"></i>Low Risk</span>
+                                        <span class="text-gray-400"><i class="fas fa-eye-slash mr-1"></i>Maintain Cover</span>
+                                    </div>
+                                    <div class="text-indigo-400">
+                                        <i class="fas fa-bolt mr-1"></i>
+                                        Unlocks: Shadow Path
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Community Influence -->
+                        <div class="glassmorphism-light rounded-lg p-4 mt-6 border border-yellow-500/20">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-network-wired text-yellow-400 mr-2"></i>
+                                <h4 class="font-bold text-yellow-400">PORTER NETWORK INFLUENCE</h4>
+                            </div>
+                            <div class="text-sm text-gray-300">
+                                <p class="mb-2" data-mock="true">The collective choices of <strong>2,847 Porters</strong> will influence this story's direction.</p>
+                                <div class="flex items-center space-x-4 text-xs">
+                                    <span>⏰ <span data-mock="true">4 hours 23 minutes</span> remaining to vote</span>
+                                    <span>🔥 <span data-mock="true">89% participation</span> rate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: ChoiceSystem -->
+
+                    <!-- @COMPONENT: ConsequenceTracker [shows impact of previous choices] -->
+                    <div class="glassmorphism consequence-pulse rounded-xl p-6 mb-6 border border-purple-500/30">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-dna text-purple-400 mr-3 text-xl"></i>
+                            <h3 class="font-orbitron text-lg font-bold text-purple-300">NARRATIVE STRAND ANALYSIS</h3>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-400" data-mock="true">+127</div>
+                                <div class="text-sm text-green-300">Trust Network</div>
+                                <div class="text-xs text-gray-400 mt-1">Your honest approach is building allies</div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-red-400" data-mock="true">-43</div>
+                                <div class="text-sm text-red-300">Council Standing</div>
+                                <div class="text-xs text-gray-400 mt-1">Official authorities are growing suspicious</div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-400" data-mock="true">+89</div>
+                                <div class="text-sm text-blue-300">Crew Loyalty</div>
+                                <div class="text-xs text-gray-400 mt-1">Your decisions inspire confidence</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-gray-600/30">
+                            <div class="text-xs text-gray-400">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Your choices are creating ripple effects across <span class="text-purple-300" data-mock="true">3 star systems</span> and influencing <span class="text-purple-300" data-mock="true">12 key characters</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: ConsequenceTracker -->
+
+                    <!-- Chapter Navigation -->
+                    <div class="flex justify-between items-center glassmorphism rounded-xl p-4">
+                        <button class="flex items-center px-4 py-2 bg-gray-700/50 rounded-lg text-gray-400 hover:text-white transition-colors" disabled>
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Previous Chapter
+                        </button>
+                        
+                        <div class="flex items-center space-x-2 text-sm text-gray-400">
+                            <span data-mock="true">Chapter 3 of 12</span>
+                            <i class="fas fa-circle text-xs text-purple-400"></i>
+                            <span data-mock="true">~15 min read</span>
+                        </div>
+                        
+                        <button class="flex items-center px-4 py-2 bg-purple-600/20 border border-purple-500/30 rounded-lg text-purple-300 hover:bg-purple-600/30 transition-colors">
+                            Continue Reading
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <!-- @END_COMPONENT: StoryContent -->
+        </main>
+        <!-- @END_COMPONENT: MainContent -->
+    </div>
+    <!-- @END_COMPONENT: AppLayout -->
+
+    <!-- @COMPONENT: CharacterModal [character profiles overlay] -->
+    <div id="character-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="glassmorphism rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-auto">
+            <div class="flex justify-between items-start mb-6">
+                <div class="flex items-center">
+                    <!-- A professional portrait of a confident female space captain in a dark blue uniform -->
+                    <img src="https://pixabay.com/get/g0b6046deb664624a7702d7be75a816f0a9ff13ec947ffc27798ddba7b86190de1fd673fc787e9733c5bb7393c70fb6a77cec9321ee1d3e06188ee85d273e6cbf_1280.jpg" 
+                         alt="Captain Chen portrait" 
+                         class="w-20 h-20 rounded-xl object-cover mr-4" />
+                    <div>
+                        <h3 class="font-orbitron text-xl font-bold text-white" data-mock="true">Captain Elena Chen</h3>
+                        <p class="text-purple-300" data-mock="true">Commander, Starship Wanderer</p>
+                        <div class="flex items-center space-x-2 mt-1 text-sm text-gray-400">
+                            <span data-mock="true">Trust Level: High</span>
+                            <i class="fas fa-circle text-xs"></i>
+                            <span data-mock="true">Appeared in 8 chapters</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="text-gray-400 hover:text-white text-xl" onclick="document.getElementById('character-modal').classList.add('hidden')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <h4 class="font-bold text-indigo-300 mb-2">Background</h4>
+                    <p class="text-gray-300 text-sm leading-relaxed" data-mock="true">
+                        A veteran of the Titan Conflict, Captain Chen earned her command through exceptional service and an unwavering moral compass. Her decision to take on the mysterious cargo that started this journey was driven by both financial necessity and a growing suspicion about Council activities.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-indigo-300 mb-2">Your Relationship</h4>
+                    <div class="glassmorphism-light rounded-lg p-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm">Trust</span>
+                            <span class="text-sm text-green-400" data-mock="true">87%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 87%"></div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2" data-mock="true">Your honest approach has earned Chen's respect. She values your input on major decisions.</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-indigo-300 mb-2">Key Decisions Influenced</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            <span data-mock="true">Supported your plan to investigate the cargo</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-clock text-yellow-400 mr-2"></i>
+                            <span data-mock="true">Currently considering your alliance proposal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: CharacterModal -->
+
+    <script>
+        (function() {
+            // TODO: Implement choice tracking system with local storage
+            // TODO: Implement progress saving functionality
+            // TODO: Add real-time community voting integration
+            
+            // Particle generation for mini logo
+            const miniParticleContainer = document.getElementById('mini-particle-container');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 2 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                const angle = Math.random() * 360;
+                const radius = Math.random() * 30 + 10;
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+
+                particle.style.setProperty('--x', `${x}px`);
+                particle.style.setProperty('--y', `${y}px`);
+                particle.style.animationDelay = `${Math.random() * 4}s`;
+                
+                miniParticleContainer.appendChild(particle);
+            }
+            
+            // Sidebar toggle functionality
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            sidebarToggle?.addEventListener('click', function() {
+                sidebar.classList.toggle('sidebar-hidden');
+            });
+            
+            // Choice selection handling
+            document.querySelectorAll('[data-event="click:selectChoice"]').forEach(choice => {
+                choice.addEventListener('click', function() {
+                    const choiceValue = this.dataset.choice;
+                    
+                    // Remove selection from other choices
+                    document.querySelectorAll('[data-choice]').forEach(c => {
+                        c.classList.remove('border-purple-500', 'bg-purple-600/10');
+                        c.classList.add('border-gray-600/30');
+                    });
+                    
+                    // Highlight selected choice
+                    this.classList.remove('border-gray-600/30');
+                    this.classList.add('border-purple-500', 'bg-purple-600/10');
+                    
+                    // TODO: Save choice to local storage
+                    // TODO: Update progress tracking
+                    // TODO: Trigger consequence calculations
+                    
+                    console.log(`Choice ${choiceValue} selected`);
+                });
+            });
+            
+            // Character modal demo
+            setTimeout(() => {
+                const modal = document.getElementById('character-modal');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    setTimeout(() => modal.classList.add('hidden'), 5000);
+                }
+            }, 3000);
+            
+        })();
+    </script>
+</body>
+</html>
