@@ -82,7 +82,7 @@ export default function ProfilePage() {
                     <div className="w-20 h-20 rounded-full bg-purple-600 flex items-center justify-center mx-auto mb-4">
                       <i className="fas fa-user text-3xl text-white"></i>
                     </div>
-                    <CardTitle className="text-white font-orbitron">
+                    <CardTitle className="text-white font-orbitron break-words text-center">
                       {userProfile.username}
                     </CardTitle>
                     <p className="text-purple-300">{userProfile.level}</p>

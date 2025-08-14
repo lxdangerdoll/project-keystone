@@ -97,9 +97,9 @@ export default function UniversePage() {
 
             <Tabs defaultValue="locations" className="w-full">
               <TabsList className="glassmorphism border-gray-600/30 mb-6">
-                <TabsTrigger value="locations" className="text-gray-300">Locations</TabsTrigger>
-                <TabsTrigger value="factions" className="text-gray-300">Factions</TabsTrigger>
-                <TabsTrigger value="technology" className="text-gray-300">Technology</TabsTrigger>
+                <TabsTrigger value="locations" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-purple-600/30">Locations</TabsTrigger>
+                <TabsTrigger value="factions" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-purple-600/30">Factions</TabsTrigger>
+                <TabsTrigger value="technology" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-purple-600/30">Technology</TabsTrigger>
               </TabsList>
 
               <TabsContent value="locations">
