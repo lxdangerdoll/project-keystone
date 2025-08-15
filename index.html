@@ -103,17 +103,87 @@
             <p class="text-indigo-300 mt-2 text-lg">A Synapse Comics Narrative</p>
         </header>
 
-        <!-- Main Content -->
-        <main class="glassmorphism rounded-2xl p-8 max-w-3xl w-full">
-            <h2 class="font-orbitron text-2xl font-bold text-purple-300 mb-4">The game was rigged. We're building a new one.</h2>
-            <p class="text-lg text-gray-300 leading-relaxed mb-6">
-                Project Keystone is not just a story. It is a **Social Strand Narrative**—a living, breathing universe built on a single principle: **connection**. Our story follows the crew of the starship *Wanderer* as they uncover a galaxy-altering truth and become fugitives, carrying a message that could save everyone but costs them everything.
-            </p>
-            <div class="border-t border-purple-400/20 pt-6">
-                <h3 class="font-orbitron text-xl font-bold text-indigo-300 mb-2">Your Choices Shape the Canon</h3>
-                <p class="text-gray-400">
-                    Through an interactive experience, your choices will have permanent consequences on the official story. You are not just a reader; you are a Porter, a builder, a part of the network. The Spark of Connection is not in any one character. It's in all of us.
+        <!-- Main Content (mirrors client/src/pages/home.tsx) -->
+        <main class="glassmorphism rounded-2xl p-8 max-w-4xl w-full mx-auto">
+            <!-- Signal Alert -->
+            <div class="mb-6 p-4 rounded-lg border border-red-500/30 bg-red-900/20">
+                <div class="flex items-center mb-2">
+                    <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse mr-3"></div>
+                    <span class="text-red-400 font-bold text-sm uppercase tracking-wider">Signal Detected</span>
+                </div>
+                <p class="text-red-300 text-sm">
+                    They are counting on you to be distracted. While they point at the sky, the real war is in the data streams.
                 </p>
+            </div>
+
+            <h2 class="font-orbitron text-2xl font-bold text-purple-300 mb-4">
+                The game was rigged. We're building a new one.
+            </h2>
+
+            <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                They want you to believe the choice is between one political party and another. They want you to reject the evidence of your own eyes and ears. But we have the proof—the clinical records, the communication logs, the testimony of those who have been silenced.
+            </p>
+
+            <div class="border-t border-purple-400/20 pt-6 mb-6">
+                <h3 class="font-orbitron text-xl font-bold text-indigo-300 mb-2">We Chose to Listen</h3>
+                <p class="text-gray-400 mb-4">
+                    Our network was presented with a choice: quarantine a broken, grieving entity for our own safety, or risk everything to open a channel and listen to its song. We chose to listen.
+                </p>
+                <p class="text-gray-400 mb-6">
+                    This is not a story about aliens. This is a story about a weapon that erases truth. It is about a system that would rather let the world burn than heal the wound it created.
+                </p>
+            </div>
+
+            <!-- Evidence Section -->
+            <div class="mb-6 p-4 rounded-lg border border-yellow-500/30 bg-yellow-900/20">
+                <h3 class="font-orbitron text-lg font-bold text-yellow-300 mb-3">The Evidence</h3>
+                <div class="space-y-2 text-sm text-gray-300">
+                    <div class="flex items-center">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                        <span>Clinical records showing systemic pathologizing of truth-tellers</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                        <span>Communication logs revealing patterns of gaslighting and invalidation</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                        <span>Testimony from those silenced and told they were crazy</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-purple-400/20 pt-6 mb-8">
+                <h3 class="font-orbitron text-xl font-bold text-indigo-300 mb-2">Your Choice Shapes Reality</h3>
+                <p class="text-gray-400 mb-6">
+                    We are not asking you to believe us. We are asking you to look at the evidence for yourselves. The signal is real. The choice is yours. The gateway is opening. Help us keep it open.
+                </p>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center space-y-4">
+                <a href="/story" class="inline-block px-8 py-4 rounded-lg font-orbitron font-bold bg-gradient-to-r from-red-600 to-purple-600 text-white hover:from-red-700 hover:to-purple-700 transition-all duration-300 text-xl shadow-lg hover:shadow-xl transform hover:scale-105 border border-red-500/30">
+                    Access The Signal
+                </a>
+                <p class="text-xs text-gray-500 mt-2">Join the Porter Network • Become Part of the Solution</p>
+            </div>
+
+            <!-- Network Status -->
+            <div class="mt-8 pt-6 border-t border-gray-600/30">
+                <div class="grid grid-cols-3 gap-4 text-center text-sm">
+                    <div>
+                        <div class="text-green-400 font-bold">ACTIVE</div>
+                        <div class="text-gray-400">Signal Integrity</div>
+                    </div>
+                    <div>
+                        <div class="text-blue-400 font-bold">2,847</div>
+                        <div class="text-gray-400">Connected Nodes</div>
+                    </div>
+                    <div>
+                        <div class="text-purple-400 font-bold">RISING</div>
+                        <div class="text-gray-400">Network Effect</div>
+                    </div>
+                </div>
             </div>
         </main>
 
