@@ -30,11 +30,13 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
           <>
             <DialogHeader className="pb-4">
               <div className="flex items-center space-x-4">
-                <img
-                  src={character.imageUrl ?? ""}
-                  alt={character.name}
-                  className="w-20 h-20 rounded-xl object-cover"
-                />
+                <div className="w-20 h-20 rounded-xl bg-gray-800/60 overflow-hidden flex items-center justify-center">
+                  <img
+                    src={character.imageUrl ?? ""}
+                    alt={character.name}
+                    className="max-w-full max-h-full object-contain"
+                  />
+                </div>
                 <div className="flex-1">
                   <DialogTitle className="font-orbitron text-xl font-bold text-white">
                     {character.name}
@@ -93,4 +95,4 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
       </DialogContent>
     </Dialog>
   );
-}
+}2

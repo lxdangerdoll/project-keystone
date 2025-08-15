@@ -54,11 +54,13 @@ export default function CharactersPage() {
                 <Card key={character.id} className="glassmorphism border-gray-600/30">
                   <CardHeader className="pb-4">
                     <div className="flex items-center space-x-4">
-                      <img
-                        src={character.imageUrl}
-                        alt={character.name}
-                        className="w-16 h-16 rounded-xl object-cover"
-                      />
+                      <div className="w-16 h-16 rounded-xl bg-gray-800/60 overflow-hidden flex items-center justify-center">
+                        <img
+                          src={character.imageUrl}
+                          alt={character.name}
+                          className="max-w-full max-h-full object-contain"
+                        />
+                      </div>
                       <div className="flex-1">
                         <CardTitle className="text-white font-orbitron">
                           {character.name}

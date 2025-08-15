@@ -3,13 +3,39 @@
     "id": "char-1",
     "name": "Captain Elena Chen",
     "title": "Commander, Starship Wanderer",
-    "imageUrl": "https://images.unsplash.com/photo-1494790108755-2616b612b913?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200",
+    "imageUrl": "/project-keystone/api/characters/images/captain-chen.png",
     "background": "A veteran of the Titan Conflict, Captain Chen earned her command through exceptional service and an unwavering moral compass. Her decision to take on the mysterious cargo that started this journey was driven by both financial necessity and a growing suspicion about Council activities.",
     "trustLevel": 87,
     "appearanceCount": 8,
     "keyDecisions": [
       "Supported your plan to investigate the cargo",
       "Currently considering your alliance proposal"
+    ]
+  },
+  {
+    "id": "char-2",
+    "name": "Navigator Luis Torres",
+    "title": "Chief Navigator, Wanderer",
+    "imageUrl": "/project-keystone/api/characters/images/torres.png",
+    "background": "A brilliant navigator with a knack for pattern recognition and a deep personal stake in exposing Council misconduct.",
+    "trustLevel": 72,
+    "appearanceCount": 6,
+    "keyDecisions": [
+      "Decoded early fragments of the Keystone signal",
+      "Warned against transmitting unverified data"
+    ]
+  },
+  {
+    "id": "char-3",
+    "name": "Admiral Mara Reeves",
+    "title": "Galactic Council Liaison",
+    "imageUrl": "/project-keystone/api/characters/images/reeves.png",
+    "background": "A high-ranking official with a complicated history with Captain Chen; integrity tested by conflicting loyalties.",
+    "trustLevel": 48,
+    "appearanceCount": 4,
+    "keyDecisions": [
+      "Offered a backchannel to present evidence",
+      "Refused to authorize a public broadcast"
     ]
   }
 ]

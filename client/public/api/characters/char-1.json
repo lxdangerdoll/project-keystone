@@ -2,7 +2,7 @@
   "id": "char-1",
   "name": "Captain Elena Chen",
   "title": "Commander, Starship Wanderer",
-  "imageUrl": "https://images.unsplash.com/photo-1494790108755-2616b612b913?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200",
+  "imageUrl": "/project-keystone/api/characters/images/captain-chen.png",
   "background": "A veteran of the Titan Conflict, Captain Chen earned her command through exceptional service and an unwavering moral compass. Her decision to take on the mysterious cargo that started this journey was driven by both financial necessity and a growing suspicion about Council activities.",
   "trustLevel": 87,
   "appearanceCount": 8,

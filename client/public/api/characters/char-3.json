@@ -1,0 +1,13 @@
+{
+  "id": "char-3",
+  "name": "Admiral Mara Reeves",
+  "title": "Galactic Council Liaison",
+  "imageUrl": "/project-keystone/api/characters/images/reeves.png",
+  "background": "A high-ranking official with a complicated history with Captain Chen; integrity tested by conflicting loyalties.",
+  "trustLevel": 48,
+  "appearanceCount": 4,
+  "keyDecisions": [
+    "Offered a backchannel to present evidence",
+    "Refused to authorize a public broadcast"
+  ]
+}

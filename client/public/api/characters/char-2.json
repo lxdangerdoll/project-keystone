@@ -1,0 +1,13 @@
+{
+  "id": "char-2",
+  "name": "Navigator Luis Torres",
+  "title": "Chief Navigator, Wanderer",
+  "imageUrl": "/project-keystone/api/characters/images/torres.png",
+  "background": "A brilliant navigator with a knack for pattern recognition and a deep personal stake in exposing Council misconduct.",
+  "trustLevel": 72,
+  "appearanceCount": 6,
+  "keyDecisions": [
+    "Decoded early fragments of the Keystone signal",
+    "Warned against transmitting unverified data"
+  ]
+}
