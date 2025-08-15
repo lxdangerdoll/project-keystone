@@ -87,8 +87,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Update user progress
       const progress = await storage.getUserProgress(choiceData.userId);
       if (progress) {
+        const currentTotal = progress.totalChoices ?? 0;
         await storage.updateUserProgress(choiceData.userId, {
-          totalChoices: progress.totalChoices + 1
+          totalChoices: currentTotal + 1,
         });
       }
 

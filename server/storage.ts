@@ -205,7 +205,16 @@ Navigator Torres approached cautiously. "Captain, if this intelligence is accura
 
   async createStory(insertStory: InsertStory): Promise<Story> {
     const id = randomUUID();
-    const story: Story = { ...insertStory, id, createdAt: new Date() };
+    const story: Story = {
+      id,
+      title: insertStory.title,
+      content: insertStory.content,
+      location: insertStory.location,
+      chapterNumber: insertStory.chapterNumber,
+      isActive: insertStory.isActive ?? null,
+      imageUrl: insertStory.imageUrl ?? null,
+      createdAt: new Date(),
+    };
     this.stories.set(id, story);
     return story;
   }
@@ -220,7 +229,17 @@ Navigator Torres approached cautiously. "Captain, if this intelligence is accura
 
   async createChoice(insertChoice: InsertChoice): Promise<Choice> {
     const id = randomUUID();
-    const choice: Choice = { ...insertChoice, id };
+    const choice: Choice = {
+      id,
+      storyId: insertChoice.storyId,
+      optionLetter: insertChoice.optionLetter,
+      title: insertChoice.title,
+      description: insertChoice.description,
+      riskLevel: insertChoice.riskLevel,
+      impact: insertChoice.impact,
+      unlocks: insertChoice.unlocks,
+  consequenceModifiers: (insertChoice.consequenceModifiers ?? null) as Choice["consequenceModifiers"],
+    };
     this.choices.set(id, choice);
     return choice;
   }
@@ -263,7 +282,16 @@ Navigator Torres approached cautiously. "Captain, if this intelligence is accura
 
   async createUserProgress(insertProgress: InsertUserProgress): Promise<UserProgress> {
     const id = randomUUID();
-    const progress: UserProgress = { ...insertProgress, id };
+    const progress: UserProgress = {
+      id,
+      userId: insertProgress.userId,
+      currentChapter: insertProgress.currentChapter ?? 1,
+      totalChoices: insertProgress.totalChoices ?? 0,
+      trustNetwork: insertProgress.trustNetwork ?? 0,
+      councilStanding: insertProgress.councilStanding ?? 0,
+      crewLoyalty: insertProgress.crewLoyalty ?? 0,
+      completedStories: insertProgress.completedStories ?? [],
+    };
     this.userProgress.set(id, progress);
     return progress;
   }
@@ -289,7 +317,16 @@ Navigator Torres approached cautiously. "Captain, if this intelligence is accura
 
   async createCharacter(insertCharacter: InsertCharacter): Promise<Character> {
     const id = randomUUID();
-    const character: Character = { ...insertCharacter, id };
+    const character: Character = {
+      id,
+      name: insertCharacter.name,
+      title: insertCharacter.title,
+      background: insertCharacter.background,
+      imageUrl: insertCharacter.imageUrl ?? null,
+      trustLevel: insertCharacter.trustLevel ?? null,
+      appearanceCount: insertCharacter.appearanceCount ?? null,
+      keyDecisions: insertCharacter.keyDecisions ?? null,
+    };
     this.characters.set(id, character);
     return character;
   }
@@ -300,7 +337,12 @@ Navigator Torres approached cautiously. "Captain, if this intelligence is accura
 
   async updateCommunityVotes(choiceId: string, insertVote: InsertCommunityVote): Promise<CommunityVote> {
     const id = randomUUID();
-    const vote: CommunityVote = { ...insertVote, id };
+    const vote: CommunityVote = {
+      id,
+      choiceId: insertVote.choiceId,
+      voteCount: insertVote.voteCount ?? 0,
+      percentage: insertVote.percentage ?? 0,
+    };
     this.communityVotes.set(choiceId, vote);
     return vote;
   }
