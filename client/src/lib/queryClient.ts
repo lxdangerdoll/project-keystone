@@ -18,7 +18,10 @@ function resolveApiUrl(url: string): string {
       // Serve static JSON files from the project path
       // Map '/api/foo/bar' -> `${base}api/foo/bar.json`
       const cleanBase = base.endsWith("/") ? base : base + "/";
-      return cleanBase.replace(/\/$/, "/") + url.replace(/^\//, "") + ".json";
+  const jsonPath = cleanBase.replace(/\/$/, "/") + url.replace(/^\//, "") + ".json";
+  // Add a small cache-buster to avoid stale JSON on GitHub Pages
+  const v = Date.now().toString();
+  return jsonPath + "?v=" + v;
     }
     // In dev/prod server, keep the leading slash (same origin API)
     return url;
