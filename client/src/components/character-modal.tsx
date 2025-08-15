@@ -4,22 +4,24 @@ import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Character } from "@/types/api";
 
-interface CharacterModalProps {
+type CharacterModalProps = {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (open: boolean) => void;
   characterId: string;
-}
+};
 
 export default function CharacterModal({ isOpen, onClose, characterId }: CharacterModalProps) {
-  // Explicit generics to ensure typed data with React Query v5
-  const { data: character, isLoading } = useQuery<Character, Error, Character, [string, string]>({
-    queryKey: ["/api/characters", characterId],
+  // Fetch the specific character by id; default queryFn uses the first string key as the URL
+  const { data: character, isLoading } = useQuery<Character, Error, Character, [string]>({
+    queryKey: [
+      `/api/characters/${characterId}`,
+    ],
     enabled: isOpen && !!characterId,
   });
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="glassmorphism border-gray-600/30 max-w-2xl max-h-[90vh] overflow-auto">
+      <DialogContent className="glassmorphism border-gray-600/30 max-w-2xl h-[90vh] flex flex-col overflow-hidden">
         {isLoading ? (
           <div className="space-y-4">
             <Skeleton className="h-16 w-full" />
@@ -44,49 +46,57 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
                   <p className="text-purple-300">{character.title}</p>
                   <div className="flex items-center space-x-2 mt-1 text-sm text-gray-400">
                     <span>Trust Level: {character.trustLevel ?? 0}</span>
-                    <i className="fas fa-circle text-xs"></i>
+                    <i className="fas fa-circle text-xs" />
                     <span>Appeared in {character.appearanceCount ?? 0} chapters</span>
                   </div>
                 </div>
               </div>
             </DialogHeader>
-            
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-bold text-indigo-300 mb-2">Background</h4>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  {character.background}
-                </p>
-              </div>
-              
-              <div>
-                <h4 className="font-bold text-indigo-300 mb-2">Your Relationship</h4>
-                <div className="glassmorphism-light rounded-lg p-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm">Trust</span>
-                    <span className="text-sm text-green-400">{character.trustLevel ?? 0}%</span>
-                  </div>
-                  <Progress value={character.trustLevel ?? 0} className="h-2 mb-2" />
-                  <p className="text-xs text-gray-400">
-                    Your honest approach has earned {character.name.split(' ')[0]}'s respect. 
-                    They value your input on major decisions.
+
+            {/* Scrollable body */}
+            <div className="flex-1 overflow-auto px-1">
+              <div className="flex flex-col gap-4">
+                <div>
+                  <h4 className="font-bold text-indigo-300 mb-2">Background</h4>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    {character.background}
                   </p>
                 </div>
               </div>
-              
-              {character.keyDecisions && character.keyDecisions.length > 0 && (
+            </div>
+
+            {/* Fixed footer at the bottom of the modal */}
+            <div className="mt-4 border-t border-gray-600/30 pt-4 bg-black/20 backdrop-blur-sm -mx-6 px-6">
+              <div className="space-y-4">
                 <div>
-                  <h4 className="font-bold text-indigo-300 mb-2">Key Decisions Influenced</h4>
-                  <div className="space-y-2 text-sm">
-                    {character.keyDecisions.map((decision, index) => (
-                      <div key={index} className="flex items-center text-gray-300">
-                        <i className="fas fa-check-circle text-green-400 mr-2"></i>
-                        <span>{decision}</span>
-                      </div>
-                    ))}
+                  <h4 className="font-bold text-indigo-300 mb-2">Your Relationship</h4>
+                  <div className="glassmorphism-light rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm">Trust</span>
+                      <span className="text-sm text-green-400">{character.trustLevel ?? 0}%</span>
+                    </div>
+                    <Progress value={character.trustLevel ?? 0} className="h-2 mb-2" />
+                    <p className="text-xs text-gray-400">
+                      Your honest approach has earned {character.name.split(" ")[0]}'s respect.
+                      They value your input on major decisions.
+                    </p>
                   </div>
                 </div>
-              )}
+
+                {!!character.keyDecisions?.length && (
+                  <div>
+                    <h4 className="font-bold text-indigo-300 mb-2">Key Decisions Influenced</h4>
+                    <div className="space-y-2 text-sm">
+                      {character.keyDecisions.map((decision, index) => (
+                        <div key={index} className="flex items-center text-gray-300">
+                          <i className="fas fa-check-circle text-green-400 mr-2" />
+                          <span>{decision}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </>
         ) : (
@@ -95,4 +105,4 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
       </DialogContent>
     </Dialog>
   );
-}2
+}
