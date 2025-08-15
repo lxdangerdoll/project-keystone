@@ -24,6 +24,8 @@ export default defineConfig({
     },
   },
   root: path.resolve(import.meta.dirname, "client"),
+  // Ensure correct asset paths when hosted on GitHub Pages project site
+  base: "/project-keystone/",
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
