@@ -3,6 +3,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 
+// Define the correct type for your character object
+interface Character {
+  name: string;
+  imageUrl: string;
+  title: string;
+  appearanceCount: number;
+  background: string;
+  trustLevel: number;
+  keyDecisions: string[];
+}
+
 interface CharacterModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -10,7 +21,8 @@ interface CharacterModalProps {
 }
 
 export default function CharacterModal({ isOpen, onClose, characterId }: CharacterModalProps) {
-  const { data: character, isLoading } = useQuery({
+  // Tell react-query the expected type of the response
+  const { data: character, isLoading } = useQuery<Character>({
     queryKey: ["/api/characters", characterId],
     enabled: isOpen && !!characterId,
   });
@@ -39,7 +51,7 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
                   </DialogTitle>
                   <p className="text-purple-300">{character.title}</p>
                   <div className="flex items-center space-x-2 mt-1 text-sm text-gray-400">
-                    <span>Trust Level: High</span>
+                    <span>Trust Level: {character.trustLevel}</span>
                     <i className="fas fa-circle text-xs"></i>
                     <span>Appeared in {character.appearanceCount} chapters</span>
                   </div>
@@ -64,8 +76,8 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
                   </div>
                   <Progress value={character.trustLevel} className="h-2 mb-2" />
                   <p className="text-xs text-gray-400">
-                    Your honest approach has earned {character.name.split(' ')[1]}'s respect. 
-                    She values your input on major decisions.
+                    Your honest approach has earned {character.name.split(' ')[0]}'s respect. 
+                    They value your input on major decisions.
                   </p>
                 </div>
               </div>
@@ -74,7 +86,7 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
                 <div>
                   <h4 className="font-bold text-indigo-300 mb-2">Key Decisions Influenced</h4>
                   <div className="space-y-2 text-sm">
-                    {character.keyDecisions.map((decision: string, index: number) => (
+                    {character.keyDecisions.map((decision, index) => (
                       <div key={index} className="flex items-center text-gray-300">
                         <i className="fas fa-check-circle text-green-400 mr-2"></i>
                         <span>{decision}</span>
