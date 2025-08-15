@@ -105,8 +105,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get all characters
   app.get("/api/characters", async (req, res) => {
     try {
-      const characters = await storage.getAllCharacters();
-      res.json(characters);
+  const characters = await storage.getAllCharacters();
+  res.set("Cache-Control", "no-store");
+  res.json(characters);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch characters" });
     }
@@ -122,7 +123,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Character not found" });
       }
 
-      res.json(character);
+  res.set("Cache-Control", "no-store");
+  res.json(character);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch character" });
     }

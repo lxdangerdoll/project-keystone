@@ -37,5 +37,18 @@
       "Offered a backchannel to present evidence",
       "Refused to authorize a public broadcast"
     ]
+  },
+  {
+    "id": "char-4",
+    "name": "DROID-7K \"Seven\"",
+    "title": "Logistics and Tactical Analysis Unit",
+    "imageUrl": "/project-keystone/api/characters/images/droid-seven.png",
+    "background": "An adaptive-heuristic droid retrofitted for field ops. Seven excels at probability mapping, systems patching, and dry one-liners when morale dips.",
+    "trustLevel": 64,
+    "appearanceCount": 5,
+    "keyDecisions": [
+      "Projected a safe window for the relay infiltration",
+      "Overrode a shipwide lockdown to extract critical data"
+    ]
   }
 ]

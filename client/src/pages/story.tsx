@@ -126,11 +126,11 @@ export default function StoryPage() {
               </div>
             </div>
             
-            <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-3">
               <Button
                 variant="outline"
                 size="sm"
-                className="glassmorphism-light border-gray-600/30 text-gray-300 hover:bg-gray-600/30"
+        className="glassmorphism-chrome border-gray-700/40 text-gray-200 hover:bg-gray-800/30"
               >
                 <i className="fas fa-bookmark mr-2"></i>
                 Bookmark
@@ -138,7 +138,7 @@ export default function StoryPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="glassmorphism-light border-gray-600/30 text-gray-300 hover:bg-gray-600/30"
+        className="glassmorphism-chrome border-gray-700/40 text-gray-200 hover:bg-gray-800/30"
               >
                 <i className="fas fa-cog"></i>
               </Button>
@@ -165,7 +165,7 @@ export default function StoryPage() {
                     </p>
                   ))}
                   
-                  <div className="glassmorphism-light rounded-lg p-4 border-l-4 border-yellow-400 mb-6">
+                  <div className="glassmorphism-chrome rounded-lg p-4 border-l-4 border-yellow-400/70 mb-6">
                     <div className="flex items-start">
                       <i className="fas fa-exclamation-triangle text-yellow-400 mt-1 mr-3"></i>
                       <div>

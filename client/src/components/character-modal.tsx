@@ -32,11 +32,12 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
           <>
             <DialogHeader className="pb-4">
               <div className="flex items-center space-x-4">
-                <div className="w-20 h-20 rounded-xl bg-gray-800/60 overflow-hidden flex items-center justify-center">
+                {/* Portrait with consistent aspect and border */}
+                <div className="shrink-0 w-24 h-32 md:w-28 md:h-36 rounded-2xl bg-gray-900/60 ring-1 ring-gray-600/40 overflow-hidden flex items-center justify-center">
                   <img
                     src={character.imageUrl ?? ""}
                     alt={character.name}
-                    className="max-w-full max-h-full object-contain"
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="flex-1">

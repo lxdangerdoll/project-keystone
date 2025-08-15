@@ -1,4 +1,60 @@
-# Project Keystone - Interactive Narrative Web Application
+# Project Keystone
+
+An interactive narrative SPA where player choices influence the story canon. Built with React + Vite, typed with TypeScript, and deployed to GitHub Pages with a static-API pattern.
+
+## Tech Stack
+- React 18, TypeScript, Vite
+- Wouter (routing), @tanstack/react-query v5 (data)
+- Tailwind + custom glassmorphism styles
+- Express dev server (for local API + Vite middlewares)
+- GitHub Pages (production hosting)
+
+## Quick start (Windows)
+- Node 18+
+- Install deps: `npm install`
+- Dev: `npm run dev` → http://127.0.0.1:5000
+
+Notes
+- In Firefox, Vite HMR may log a WebSocket fallback; it’s non-blocking.
+- If /api/characters seems cached, hard refresh or append a query (?bust=1).
+
+## App structure
+- `client/` SPA source
+  - `src/pages/*`: Story, Characters, Universe, Community, Profile
+  - `src/components/*`: UI components (choice system, modal, sidebar, etc.)
+  - `public/api/*`: Static JSON and images used by GitHub Pages
+- `server/` Express for local dev (in-memory data, Vite middleware)
+- `shared/` Shared types/schemas
+- `vite.config.ts` Vite base path and build output config
+
+## Dev API (local)
+- GET /api/stories/current
+- GET /api/users/:userId/progress
+- POST /api/users/:userId/progress
+- POST /api/choices
+- GET /api/characters
+- GET /api/characters/:id
+
+See `docs/API.md` for shapes and production mapping.
+
+## Production (GitHub Pages)
+- Project site under `/project-keystone/`.
+- SPA fallback via `404.html` + client-side `?/` decoder.
+- Static API pattern: client rewrites `/api/*` to `/project-keystone/api/*.json` (GET). POSTs are mocked client-side for demo and persisted in `localStorage`.
+- Characters’ images live in `client/public/api/characters/images/` (case-sensitive on Pages).
+
+## Build & Deploy
+- Build: `vite build` (already wired via npm script). Output to `dist/public`.
+- GitHub Actions workflow builds and deploys to Pages automatically on push to main.
+- Details in `docs/Deployment.md`.
+
+## Troubleshooting
+- 404s on deep links: ensure Vite base is `/project-keystone/` and the 404 fallback exists in the deployed output.
+- Stale JSON/images on Pages: cache-buster added to client fetcher; ensure filenames match case.
+- Dev HMR WS warnings (Firefox): informational.
+
+## Contributing / Review
+- See `docs/ReviewChecklist.md` and `docs/Submission.md` for what to verify and how to submit for review.# Project Keystone - Interactive Narrative Web Application
 
 An interactive narrative web application for Synapse Comics where user choices permanently affect the official storyline. Built as a full-stack application with React frontend and Express backend, featuring community voting and real-time consequence tracking.
 

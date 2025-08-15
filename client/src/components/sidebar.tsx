@@ -45,15 +45,17 @@ export default function Sidebar({ isOpen, progress, onCharacterClick }: SidebarP
         {navItems.map((item) => {
           const isActive = location === item.path || (location === "/" && item.path === "/story");
           return (
-            <Link key={item.path} href={item.path}>
-              <a className={`flex items-center px-3 py-2 rounded-lg transition-colors ${
-                isActive 
-                  ? 'bg-purple-600/20 text-purple-300 border border-purple-500/30' 
+            <Link
+              key={item.path}
+              href={item.path}
+              className={`flex items-center px-3 py-2 rounded-lg transition-colors ${
+                isActive
+                  ? 'bg-purple-600/20 text-purple-300 border border-purple-500/30'
                   : 'hover:bg-gray-700/30 text-gray-300'
-              }`}>
-                <i className={`${item.icon} mr-3 text-sm`}></i>
-                <span className="font-medium">{item.label}</span>
-              </a>
+              }`}
+            >
+              <i className={`${item.icon} mr-3 text-sm`}></i>
+              <span className="font-medium">{item.label}</span>
             </Link>
           );
         })}

@@ -114,20 +114,20 @@ export default function ProfilePage() {
                 </Card>
 
                 {/* Quick Actions */}
-                <Card className="glassmorphism border-gray-600/30">
+        <Card className="glassmorphism border-gray-600/30">
                   <CardHeader>
                     <CardTitle className="text-white font-orbitron text-lg">Quick Actions</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
-                    <Button variant="outline" className="w-full justify-start glassmorphism-light border-gray-600/30 text-gray-300 hover:text-white hover:bg-gray-600/30">
+          <Button variant="outline" className="w-full justify-start glassmorphism-chrome border-gray-700/40 text-gray-200 hover:text-white hover:bg-gray-800/30">
                       <i className="fas fa-download mr-2"></i>
                       Export Choices
                     </Button>
-                    <Button variant="outline" className="w-full justify-start glassmorphism-light border-gray-600/30 text-gray-300 hover:text-white hover:bg-gray-600/30">
+          <Button variant="outline" className="w-full justify-start glassmorphism-chrome border-gray-700/40 text-gray-200 hover:text-white hover:bg-gray-800/30">
                       <i className="fas fa-share mr-2"></i>
                       Share Profile
                     </Button>
-                    <Button variant="outline" className="w-full justify-start glassmorphism-light border-gray-600/30 text-gray-300 hover:text-white hover:bg-gray-600/30">
+          <Button variant="outline" className="w-full justify-start glassmorphism-chrome border-gray-700/40 text-gray-200 hover:text-white hover:bg-gray-800/30">
                       <i className="fas fa-cog mr-2"></i>
                       Preferences
                     </Button>
@@ -145,7 +145,7 @@ export default function ProfilePage() {
                   <CardContent>
                     <div className="grid md:grid-cols-2 gap-4">
                       {userProfile.badges.map((badge, index) => (
-                        <div key={index} className={`glassmorphism-light rounded-lg p-4 ${badge.earned ? 'border border-yellow-500/30' : 'opacity-50'}`}>
+                        <div key={index} className={`glassmorphism-chrome rounded-lg p-4 ${badge.earned ? 'border border-yellow-500/30' : 'opacity-50'}`}>
                           <div className="flex items-center mb-2">
                             <i className={`fas ${badge.earned ? 'fa-trophy text-yellow-400' : 'fa-lock text-gray-500'} mr-3`}></i>
                             <h4 className={`font-bold ${badge.earned ? 'text-yellow-400' : 'text-gray-500'}`}>
@@ -167,7 +167,7 @@ export default function ProfilePage() {
                   <CardContent>
                     <div className="space-y-4">
                       {userProfile.recentChoices.map((choice) => (
-                        <div key={choice.id} className="glassmorphism-light rounded-lg p-4">
+                        <div key={choice.id} className="glassmorphism-chrome rounded-lg p-4">
                           <div className="flex justify-between items-start mb-2">
                             <div>
                               <h4 className="font-medium text-white">{choice.chapter}</h4>

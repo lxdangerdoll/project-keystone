@@ -128,13 +128,58 @@ Navigator Torres approached cautiously. "Captain, if this intelligence is accura
       id: "char-1",
       name: "Captain Elena Chen",
       title: "Commander, Starship Wanderer",
-      imageUrl: "https://images.unsplash.com/photo-1494790108755-2616b612b913?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200",
+      imageUrl: "/api/characters/images/captain-chen.png",
       background: "A veteran of the Titan Conflict, Captain Chen earned her command through exceptional service and an unwavering moral compass. Her decision to take on the mysterious cargo that started this journey was driven by both financial necessity and a growing suspicion about Council activities.",
       trustLevel: 87,
       appearanceCount: 8,
       keyDecisions: [
         "Supported your plan to investigate the cargo",
         "Currently considering your alliance proposal"
+      ]
+    };
+
+    const character2: Character = {
+      id: "char-2",
+      name: "Navigator Marisol Torres",
+      title: "Chief Navigator, Starship Wanderer",
+      imageUrl: "/api/characters/images/torres.png",
+      background:
+        "Brilliant and unflappable, Torres can thread a gravity slingshot blindfolded. She keeps a close eye on shifting political currents—and on the ship’s moral compass.",
+      trustLevel: 72,
+      appearanceCount: 6,
+      keyDecisions: [
+        "Devised the stealth approach to scan the Keystone relay",
+        "Warned against transmitting without a secure ally"
+      ]
+    };
+
+    const character3: Character = {
+      id: "char-3",
+      name: "Admiral Janus Reeves",
+      title: "Senior Liaison, Galactic Council Fleet",
+      imageUrl: "/api/characters/images/reeves.png",
+      background:
+        "A storied commander and former mentor to Chen. Reeves claims neutrality, but old loyalties and new revelations pull him toward a fateful choice.",
+      trustLevel: 41,
+      appearanceCount: 3,
+      keyDecisions: [
+        "Provided backchannel access to a secure Council node",
+        "Refused to authorize a full disclosure without verification"
+      ]
+    };
+
+    const character4: Character = {
+      id: "char-4",
+      name: "DROID-7K \"Seven\"",
+      title: "Logistics and Tactical Analysis Unit",
+      imageUrl: "/api/characters/images/droid-seven.png",
+      background:
+        "An adaptive-heuristic droid retrofitted for field operations. Seven excels at probability mapping, systems patching, and dry one-liners when morale dips.",
+      trustLevel: 64,
+      appearanceCount: 5,
+      keyDecisions: [
+        "Projected a safe window for the relay infiltration",
+        "Overrode a lockdown to extract critical data"
       ]
     };
 
@@ -147,7 +192,10 @@ Navigator Torres approached cautiously. "Captain, if this intelligence is accura
 
     this.stories.set(story1.id, story1);
     choices.forEach(choice => this.choices.set(choice.id, choice));
-    this.characters.set(character1.id, character1);
+  this.characters.set(character1.id, character1);
+  this.characters.set(character2.id, character2);
+  this.characters.set(character3.id, character3);
+  this.characters.set(character4.id, character4);
     votes.forEach(vote => this.communityVotes.set(vote.choiceId, vote));
 
     // Initialize demo user progress
