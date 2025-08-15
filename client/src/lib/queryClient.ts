@@ -50,11 +50,35 @@ export async function apiRequest(
   if (isPages && method.toUpperCase() !== "GET" && url.startsWith("/api")) {
     // Minimal mock behavior for demo purposes
     if (url === "/api/choices" && method.toUpperCase() === "POST") {
-      const body = typeof data === "object" ? data : {};
+      const body = typeof data === "object" ? (data as any) : {};
+
+      // Persist simple progress deltas keyed by user
+      try {
+        const userId = body.userId || "demo-user-1";
+        const choiceId = body.choiceId as string | undefined;
+        const key = `keystone:progress:${userId}`;
+        const raw = localStorage.getItem(key);
+        const existing = raw ? JSON.parse(raw) : {};
+        const deltas: Record<string, { trustNetwork?: number; councilStanding?: number; crewLoyalty?: number }> = {
+          "choice-1": { trustNetwork: 50, councilStanding: -75, crewLoyalty: 25 },
+          "choice-2": { trustNetwork: 25, councilStanding: 10, crewLoyalty: 15 },
+          "choice-3": { trustNetwork: -20, councilStanding: 0, crewLoyalty: 35 },
+        };
+        const delta = (choiceId && deltas[choiceId]) || {};
+        const next = {
+          trustNetwork: (existing.trustNetwork ?? 0) + (delta.trustNetwork ?? 0),
+          councilStanding: (existing.councilStanding ?? 0) + (delta.councilStanding ?? 0),
+          crewLoyalty: (existing.crewLoyalty ?? 0) + (delta.crewLoyalty ?? 0),
+          totalChoices: (existing.totalChoices ?? 0) + 1,
+          currentChapter: existing.currentChapter ?? 3,
+        };
+        localStorage.setItem(key, JSON.stringify(next));
+      } catch {}
+
       const payload = {
         id: "mock-choice-" + Date.now(),
         timestamp: new Date().toISOString(),
-        ...(body as object),
+        ...body,
       };
       return new Response(JSON.stringify(payload), {
         status: 201,
@@ -83,9 +107,32 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-  const url = queryKey.join("/") as string;
-  const resolved = resolveApiUrl(url);
-  const res = await fetch(resolved, {
+    const url = queryKey.join("/") as string;
+    const resolved = resolveApiUrl(url);
+
+    // On GitHub Pages, merge persisted progress with base JSON
+    if (isGithubPagesHost() && /^\/api\/users\/.+\/progress$/.test(url)) {
+      let base: any = {};
+      try {
+        const baseRes = await fetch(resolved, { credentials: "include" });
+        if (baseRes.ok) base = await baseRes.json();
+      } catch {}
+
+      try {
+        const [, userId] = url.match(/^\/api\/users\/([^/]+)\/progress$/) || [];
+        const raw = userId ? localStorage.getItem(`keystone:progress:${userId}`) : null;
+        const ls = raw ? JSON.parse(raw) : {};
+        return {
+          trustNetwork: ls.trustNetwork ?? base.trustNetwork ?? 0,
+          councilStanding: ls.councilStanding ?? base.councilStanding ?? 0,
+          crewLoyalty: ls.crewLoyalty ?? base.crewLoyalty ?? 0,
+          currentChapter: ls.currentChapter ?? base.currentChapter ?? 3,
+          totalChoices: ls.totalChoices ?? base.totalChoices ?? 0,
+        } as any;
+      } catch {}
+    }
+
+    const res = await fetch(resolved, {
       credentials: "include",
     });
 
