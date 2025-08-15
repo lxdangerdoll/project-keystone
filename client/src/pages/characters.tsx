@@ -3,15 +3,16 @@ import Sidebar from "@/components/sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { Character, UserProgress } from "@/types/api";
 
 const CURRENT_USER_ID = "demo-user-1";
 
 export default function CharactersPage() {
-  const { data: characters, isLoading: charactersLoading } = useQuery({
+  const { data: characters, isLoading: charactersLoading } = useQuery<Character[]>({
     queryKey: ["/api/characters"],
   });
 
-  const { data: userProgress } = useQuery({
+  const { data: userProgress } = useQuery<UserProgress>({
     queryKey: ["/api/users", CURRENT_USER_ID, "progress"],
   });
 
@@ -35,7 +36,7 @@ export default function CharactersPage() {
   return (
     <div className="min-h-screen hero-bg">
       <div className="flex">
-        <Sidebar isOpen={true} progress={userProgress} />
+  <Sidebar isOpen={true} progress={userProgress as any} />
         
         <main className="flex-1 p-6">
           <div className="max-w-6xl mx-auto">
@@ -49,7 +50,7 @@ export default function CharactersPage() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {characters?.map((character: any) => (
+              {characters?.map((character) => (
                 <Card key={character.id} className="glassmorphism border-gray-600/30">
                   <CardHeader className="pb-4">
                     <div className="flex items-center space-x-4">

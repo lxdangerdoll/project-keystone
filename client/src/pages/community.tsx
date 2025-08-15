@@ -3,15 +3,16 @@ import Sidebar from "@/components/sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import type { Story, UserProgress } from "@/types/api";
 
 const CURRENT_USER_ID = "demo-user-1";
 
 export default function CommunityPage() {
-  const { data: userProgress } = useQuery({
+  const { data: userProgress } = useQuery<UserProgress>({
     queryKey: ["/api/users", CURRENT_USER_ID, "progress"],
   });
 
-  const { data: storyData } = useQuery({
+  const { data: storyData } = useQuery<Story>({
     queryKey: ["/api/stories/current"],
   });
 
@@ -63,7 +64,7 @@ export default function CommunityPage() {
   return (
     <div className="min-h-screen hero-bg">
       <div className="flex">
-        <Sidebar isOpen={true} progress={userProgress} />
+  <Sidebar isOpen={true} progress={userProgress as any} />
         
         <main className="flex-1 p-6">
           <div className="max-w-6xl mx-auto">
@@ -101,10 +102,10 @@ export default function CommunityPage() {
                 </div>
 
                 {/* Current Story Choices */}
-                {storyData?.choices && (
+        {storyData?.choices && (
                   <div className="space-y-3">
                     <h4 className="font-bold text-indigo-300 mb-3">Current Chapter Voting Results:</h4>
-                    {storyData.choices.map((choice: any) => (
+          {storyData.choices.map((choice) => (
                       <div key={choice.id} className="glassmorphism-light rounded-lg p-3">
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-sm font-medium text-white">

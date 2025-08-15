@@ -9,6 +9,7 @@ import ConsequenceTracker from "@/components/consequence-tracker";
 import CharacterModal from "@/components/character-modal";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { Story, UserProgress } from "@/types/api";
 
 // Mock user ID for demo purposes
 const CURRENT_USER_ID = "demo-user-1";
@@ -20,12 +21,12 @@ export default function StoryPage() {
   const { toast } = useToast();
 
   // Fetch current story
-  const { data: storyData, isLoading: storyLoading } = useQuery({
+  const { data: storyData, isLoading: storyLoading } = useQuery<Story>({
     queryKey: ["/api/stories/current"],
   });
 
   // Fetch user progress
-  const { data: userProgress, isLoading: progressLoading } = useQuery({
+  const { data: userProgress, isLoading: progressLoading } = useQuery<UserProgress>({
     queryKey: ["/api/users", CURRENT_USER_ID, "progress"],
   });
 
@@ -63,10 +64,10 @@ export default function StoryPage() {
     if (submitChoiceMutation.isPending || selectedChoice === choiceId) return;
     
     setSelectedChoice(choiceId);
-    if (storyData) {
+  if (storyData) {
       submitChoiceMutation.mutate({
         choiceId,
-        storyId: storyData.id,
+    storyId: storyData.id,
       });
     }
   };
@@ -120,7 +121,7 @@ export default function StoryPage() {
                   {storyData?.title || "Loading..."}
                 </h2>
                 <p className="text-sm text-gray-400">
-                  {storyData?.location || ""}
+                  {storyData?.location ?? ""}
                 </p>
               </div>
             </div>
@@ -179,7 +180,7 @@ export default function StoryPage() {
               </div>
 
               {/* Choice System */}
-              {storyData && (
+              {!!storyData && (
                 <ChoiceSystem
                   choices={storyData.choices}
                   selectedChoice={selectedChoice}
@@ -189,7 +190,7 @@ export default function StoryPage() {
               )}
 
               {/* Consequence Tracker */}
-              {userProgress && (
+              {!!userProgress && (
                 <ConsequenceTracker progress={userProgress} />
               )}
 

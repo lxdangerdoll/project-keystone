@@ -4,11 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { UserProgress } from "@/types/api";
 
 const CURRENT_USER_ID = "demo-user-1";
 
 export default function ProfilePage() {
-  const { data: userProgress } = useQuery({
+  const { data: userProgress } = useQuery<UserProgress>({
     queryKey: ["/api/users", CURRENT_USER_ID, "progress"],
   });
 
@@ -61,7 +62,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen hero-bg">
       <div className="flex">
-        <Sidebar isOpen={true} progress={userProgress} />
+  <Sidebar isOpen={true} progress={userProgress as any} />
         
         <main className="flex-1 p-6">
           <div className="max-w-6xl mx-auto">
@@ -190,7 +191,7 @@ export default function ProfilePage() {
                 </Card>
 
                 {/* Progress Breakdown */}
-                {userProgress && (
+                {!!userProgress && (
                   <Card className="glassmorphism border-gray-600/30">
                     <CardHeader>
                       <CardTitle className="text-white font-orbitron">Narrative Impact</CardTitle>
