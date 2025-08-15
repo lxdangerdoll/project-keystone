@@ -2,17 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
-
-// Define the correct type for your character object
-interface Character {
-  name: string;
-  imageUrl: string;
-  title: string;
-  appearanceCount: number;
-  background: string;
-  trustLevel: number;
-  keyDecisions: string[];
-}
+import type { Character } from "@/types/api";
 
 interface CharacterModalProps {
   isOpen: boolean;
@@ -21,8 +11,8 @@ interface CharacterModalProps {
 }
 
 export default function CharacterModal({ isOpen, onClose, characterId }: CharacterModalProps) {
-  // Tell react-query the expected type of the response
-  const { data: character, isLoading } = useQuery<Character>({
+  // Explicit generics to ensure typed data with React Query v5
+  const { data: character, isLoading } = useQuery<Character, Error, Character, [string, string]>({
     queryKey: ["/api/characters", characterId],
     enabled: isOpen && !!characterId,
   });
@@ -41,7 +31,7 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
             <DialogHeader className="pb-4">
               <div className="flex items-center space-x-4">
                 <img
-                  src={character.imageUrl}
+                  src={character.imageUrl ?? ""}
                   alt={character.name}
                   className="w-20 h-20 rounded-xl object-cover"
                 />
@@ -51,9 +41,9 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
                   </DialogTitle>
                   <p className="text-purple-300">{character.title}</p>
                   <div className="flex items-center space-x-2 mt-1 text-sm text-gray-400">
-                    <span>Trust Level: {character.trustLevel}</span>
+                    <span>Trust Level: {character.trustLevel ?? 0}</span>
                     <i className="fas fa-circle text-xs"></i>
-                    <span>Appeared in {character.appearanceCount} chapters</span>
+                    <span>Appeared in {character.appearanceCount ?? 0} chapters</span>
                   </div>
                 </div>
               </div>
@@ -72,9 +62,9 @@ export default function CharacterModal({ isOpen, onClose, characterId }: Charact
                 <div className="glassmorphism-light rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm">Trust</span>
-                    <span className="text-sm text-green-400">{character.trustLevel}%</span>
+                    <span className="text-sm text-green-400">{character.trustLevel ?? 0}%</span>
                   </div>
-                  <Progress value={character.trustLevel} className="h-2 mb-2" />
+                  <Progress value={character.trustLevel ?? 0} className="h-2 mb-2" />
                   <p className="text-xs text-gray-400">
                     Your honest approach has earned {character.name.split(' ')[0]}'s respect. 
                     They value your input on major decisions.
