@@ -12,6 +12,20 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // SPA GitHub Pages redirect decoder
+      // If the URL contains ?/path, convert it back to the proper pathname
+      (function() {
+        var l = window.location;
+        var q = l.search;
+        if (q.startsWith('?/') ) {
+          var decoded = q.slice(2).split('&').join('?');
+          var newUrl = l.pathname.replace(/\/?$/,'/') + decoded + l.hash;
+          window.history.replaceState(null, '', newUrl);
+        }
+      })();
+    </script>
+    <!-- Use relative path so Vite injects correct base prefix -->
+    <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>

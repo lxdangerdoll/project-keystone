@@ -1,4 +1,5 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, Router as WouterRouter } from "wouter";
+import { useEffect, useMemo, useState } from "react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -26,11 +27,15 @@ function Router() {
 }
 
 function App() {
+  // Determine base path at runtime (Vite injects import.meta.env.BASE_URL like '/project-keystone/')
+  const base = (import.meta as any).env?.BASE_URL || "/";
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router />
+        <WouterRouter base={base.replace(/\/$/, "")}>
+          <Router />
+        </WouterRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );
