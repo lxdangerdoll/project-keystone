@@ -1,12 +1,16 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
 // Resolve API URLs for both dev/server and GitHub Pages (static) environments
+export function isGithubPagesHost(): boolean {
+  return typeof window !== "undefined" && /\.github\.io$/i.test(window.location.hostname);
+}
+
 function resolveApiUrl(url: string): string {
   const isAbsolute = /^(https?:)?\/\//i.test(url);
   if (isAbsolute) return url;
 
   const base = (import.meta as any).env?.BASE_URL || "/"; // e.g. '/project-keystone/' on Pages
-  const isPages = typeof window !== "undefined" && /\.github\.io$/i.test(window.location.hostname);
+  const isPages = isGithubPagesHost();
 
   // Only rewrite API routes; let asset URLs pass through
   if (url.startsWith("/api")) {
@@ -40,6 +44,27 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
+  const isPages = isGithubPagesHost();
+
+  // Intercept non-GET calls on GitHub Pages (no server) and simulate success
+  if (isPages && method.toUpperCase() !== "GET" && url.startsWith("/api")) {
+    // Minimal mock behavior for demo purposes
+    if (url === "/api/choices" && method.toUpperCase() === "POST") {
+      const body = typeof data === "object" ? data : {};
+      const payload = {
+        id: "mock-choice-" + Date.now(),
+        timestamp: new Date().toISOString(),
+        ...(body as object),
+      };
+      return new Response(JSON.stringify(payload), {
+        status: 201,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    // Generic OK fallback
+    return new Response(null, { status: 204 });
+  }
+
   const resolved = resolveApiUrl(url);
   const res = await fetch(resolved, {
     method,
