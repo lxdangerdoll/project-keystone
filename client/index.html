@@ -18,9 +18,15 @@
       (function() {
         var l = window.location;
         var q = l.search;
-        if (q.startsWith('?/') ) {
-          var decoded = q.slice(2).split('&').join('?');
-          var newUrl = l.pathname.replace(/\/?$/,'/') + decoded + l.hash;
+        if (q.startsWith('?/')) {
+          var decoded = q.slice(2).split('&').join('?'); // support query passthrough
+          // Normalize pathname (strip /index.html if present)
+          var basePath = l.pathname;
+          if (basePath.toLowerCase().endsWith('/index.html')) {
+            basePath = basePath.slice(0, -('/index.html'.length)) + '/';
+          }
+          if (!basePath.endsWith('/')) basePath += '/';
+          var newUrl = basePath + decoded + l.hash;
           window.history.replaceState(null, '', newUrl);
         }
       })();

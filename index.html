@@ -196,6 +196,21 @@
     </div>
 
     <script>
+                // SPA GitHub Pages redirect decoder for the static landing page
+                (function(){
+                    var l = window.location;
+                    var q = l.search;
+                    if(q.startsWith('?/')){
+                        var decoded = q.slice(2).split('&').join('?');
+                        var basePath = l.pathname;
+                        if(basePath.toLowerCase().endsWith('/index.html')){
+                            basePath = basePath.slice(0, -('/index.html'.length)) + '/';
+                        }
+                        if(!basePath.endsWith('/')) basePath += '/';
+                        var newUrl = basePath + decoded + l.hash;
+                        window.history.replaceState(null,'',newUrl);
+                    }
+                })();
         // Particle generation for the logo
         const particleContainer = document.getElementById('particle-container');
         const particleCount = 30;
