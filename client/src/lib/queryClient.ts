@@ -1,5 +1,33 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
+// Resolve API URLs for both dev/server and GitHub Pages (static) environments
+function resolveApiUrl(url: string): string {
+  const isAbsolute = /^(https?:)?\/\//i.test(url);
+  if (isAbsolute) return url;
+
+  const base = (import.meta as any).env?.BASE_URL || "/"; // e.g. '/project-keystone/' on Pages
+  const isPages = typeof window !== "undefined" && /\.github\.io$/i.test(window.location.hostname);
+
+  // Only rewrite API routes; let asset URLs pass through
+  if (url.startsWith("/api")) {
+    if (isPages) {
+      // Serve static JSON files from the project path
+      // Map '/api/foo/bar' -> `${base}api/foo/bar.json`
+      const cleanBase = base.endsWith("/") ? base : base + "/";
+      return cleanBase.replace(/\/$/, "/") + url.replace(/^\//, "") + ".json";
+    }
+    // In dev/prod server, keep the leading slash (same origin API)
+    return url;
+  }
+
+  // Non-API relative URL -> prefix base
+  if (url.startsWith("/")) {
+    const cleanBase = base.endsWith("/") ? base.slice(0, -1) : base;
+    return cleanBase + url;
+  }
+  return url;
+}
+
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
@@ -12,7 +40,8 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
-  const res = await fetch(url, {
+  const resolved = resolveApiUrl(url);
+  const res = await fetch(resolved, {
     method,
     headers: data ? { "Content-Type": "application/json" } : {},
     body: data ? JSON.stringify(data) : undefined,
@@ -29,7 +58,9 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+  const url = queryKey.join("/") as string;
+  const resolved = resolveApiUrl(url);
+  const res = await fetch(resolved, {
       credentials: "include",
     });
 

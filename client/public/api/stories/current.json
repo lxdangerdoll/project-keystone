@@ -1,0 +1,43 @@
+{
+  "id": "story-1",
+  "title": "Chapter 3: The Signal",
+  "chapterNumber": 3,
+  "location": "Aboard the Wanderer - Bridge",
+  "imageUrl": "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600",
+  "content": "The bridge of the *Wanderer* hummed with tension as Captain Chen studied the decoded transmission. The holographic display cast an eerie blue glow across her weathered features, highlighting the concern etched in her eyes.\n\n\"This changes everything,\" she whispered, her voice barely audible over the ship's ambient systems. The data streams flowing across the screen told a story of conspiracy that reached the highest levels of the Galactic Council.\n\nNavigator Torres approached cautiously. \"Captain, if this intelligence is accurate, we're not just carrying cargo anymore. We're carrying the evidence that could expose the entire Keystone Project.\"",
+  "choices": [
+    {
+      "id": "choice-1",
+      "optionLetter": "A",
+      "title": "Broadcast the Evidence Immediately",
+      "description": "Take immediate action. Transmit the Keystone files to every major news network and resistance cell simultaneously. The truth needs to be heard, regardless of the personal cost to your crew.",
+      "riskLevel": "high",
+      "impact": "Max Impact",
+      "unlocks": "Fugitive Path",
+      "voteCount": 967,
+      "percentage": 34
+    },
+    {
+      "id": "choice-2",
+      "optionLetter": "B",
+      "title": "Find a Trusted Ally First",
+      "description": "Seek out Admiral Reeves, an old friend who might still be trustworthy within the Council. This evidence needs to reach someone with the power and integrity to act on it properly.",
+      "riskLevel": "medium",
+      "impact": "Diplomatic",
+      "unlocks": "Alliance Path",
+      "voteCount": 1281,
+      "percentage": 45
+    },
+    {
+      "id": "choice-3",
+      "optionLetter": "C",
+      "title": "Destroy the Evidence",
+      "description": "Some secrets are too dangerous to reveal. Delete the files and continue your original mission. Sometimes ignorance truly is bliss, and your crew's safety comes first.",
+      "riskLevel": "low",
+      "impact": "Maintain Cover",
+      "unlocks": "Shadow Path",
+      "voteCount": 599,
+      "percentage": 21
+    }
+  ]
+}
