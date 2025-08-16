@@ -7,17 +7,12 @@
     <script>
       // Single Page Apps for GitHub Pages
       // https://github.com/rafgraph/spa-github-pages
-      // Redirect 404s to the SPA entry with a special query so the app can restore the route
       (function() {
-        var base = '/project-keystone';
         var l = window.location;
-        // Compute the path within the project (without the base)
-        var projectPath = l.pathname.startsWith(base)
-          ? l.pathname.slice(base.length)
-          : l.pathname;
-        // Ensure no leading slash in projectPath
+        var path = l.pathname || '/';
+        var base = path.indexOf('/project-keystone') === 0 ? '/project-keystone' : '';
+        var projectPath = path.indexOf(base) === 0 ? path.slice(base.length) : path;
         projectPath = projectPath.replace(/^\//, '');
-        // Redirect to base with ?/path to be decoded by index.html
         var redirectUrl = base + '/?/' + projectPath + l.search + l.hash;
         l.replace(redirectUrl);
       })();
@@ -31,7 +26,7 @@
     <div>
       <h1 style="margin:0 0 12px;font-family:Orbitron,Inter,sans-serif">Project Keystone</h1>
       <p>Re-establishing route…</p>
-      <p><a href="/project-keystone/">Return to gateway</a></p>
+      <p><a href="/">Return to gateway</a></p>
     </div>
   </body>
-  </html>
+</html>
